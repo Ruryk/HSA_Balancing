@@ -1,0 +1,66 @@
+version: '3'
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    networks:
+      - webnet
+    depends_on:
+      - uk1
+      - us1
+      - us2
+      - global1
+      - backup
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 5s
+      retries: 3
+
+  uk1:
+    image: httpd:latest  # Basic web server for demo
+    networks:
+      - webnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 5s
+      retries: 3
+
+  us1:
+    image: httpd:latest
+    networks:
+      - webnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 5s
+      retries: 3
+
+  us2:
+    image: httpd:latest
+    networks:
+      - webnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 5s
+      retries: 3
+
+  global1:
+    image: httpd:latest
+    networks:
+      - webnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 5s
+      retries: 3
+
+  backup:
+    image: httpd:latest
+    networks:
+      - webnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 5s
+      retries: 3
+
+networks:
+  webnet:
